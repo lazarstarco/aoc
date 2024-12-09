@@ -1,6 +1,8 @@
 import { readFileSync } from "fs";
 
+const startTime = performance.now();
 const input = readFileSync("input.txt", "utf8");
+
 let left = [],
   right = [];
 
@@ -20,3 +22,10 @@ for (let i = 0; i < left.length; i++) {
 }
 
 console.log(result);
+
+const endTime = performance.now();
+console.log(
+  `Execution time of ${process.argv[1].substring(
+    process.argv[1].indexOf("aoc")
+  )} took ${endTime - startTime} milliseconds`
+);

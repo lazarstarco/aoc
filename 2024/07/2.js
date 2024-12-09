@@ -1,24 +1,32 @@
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync } from "fs";
 
+const startTime = performance.now();
 const input = readFileSync("input.txt", "utf8");
 
 const operands = ["+", "*", "||"];
 
 const equations = input.replaceAll(": ", "=").split("\r\n");
 
-const makeCombinations = (arr, i) => {
-  let curr = arr[i];
-  if (i == arr.length) {
-    return arr;
-  }
+const makeCombinations = (equations) => {
+  let results = [];
 
-  operands.forEach((operand) => {
-    if (curr.indexOf(" ") != -1) {
-      arr.push(curr.replace(" ", operand));
+  equations.forEach((equation) => {
+    let queue = [equation];
+
+    while (queue.length > 0) {
+      let curr = queue.shift();
+
+      if (curr.indexOf(" ") === -1) {
+        results.push(curr);
+      } else {
+        operands.forEach((operand) => {
+          queue.push(curr.replace(" ", operand));
+        });
+      }
     }
   });
 
-  return makeCombinations(arr, i + 1);
+  return results;
 };
 
 const formatFormula = (formula) => {
@@ -44,15 +52,18 @@ const calculate = (equals, formula) => {
   return +equals === result;
 };
 
-const combinations = makeCombinations(equations, 0)
-  .filter((x) => x.indexOf(" ") == -1)
-  .map((x) => ({
-    equals: x.split("=")[0],
-    formula: formatFormula(x.split("=")[1]),
-  }));
+const combinations = makeCombinations(equations).map((x) => ({
+  equals: x.split("=")[0],
+  formula: formatFormula(x.split("=")[1]),
+}));
 
 const results = combinations
   .filter((combination) => calculate(combination.equals, combination.formula))
   .map((combination) => combination.equals);
 
 console.log([...new Set(results)].reduce((aggr, curr) => aggr + +curr, 0));
+
+const endTime = performance.now();
+console.log(
+  `Execution time of 2024/08/2.js took ${endTime - startTime} milliseconds`
+);

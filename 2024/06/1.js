@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
 
+const startTime = performance.now();
 const input = readFileSync("input.txt", "utf8");
 
 const DIRECTIONS = [
@@ -70,18 +71,25 @@ const redrawMap = (curr) => {
 };
 
 const loop = () => {
-//   printMap();
+  //   printMap();
 
   if (findGuard() === false) {
     console.log(`\nResult: ${getResult()}`);
     return;
   }
 
-//   setTimeout(() => {
-    process.stdout.write("\x1Bc");
-    redrawMap(findGuard(map));
-    loop();
-//   }, 650);
+  //   setTimeout(() => {
+  process.stdout.write("\x1Bc");
+  redrawMap(findGuard(map));
+  loop();
+  //   }, 650);
 };
 
 loop();
+
+const endTime = performance.now();
+console.log(
+  `Execution time of ${process.argv[1].substring(
+    process.argv[1].indexOf("aoc")
+  )} took ${endTime - startTime} milliseconds`
+);

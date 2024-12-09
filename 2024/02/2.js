@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
 
+const startTime = performance.now();
 const input = readFileSync("input.txt", "utf8");
 
 const isSafe = (row) => {
@@ -45,3 +46,10 @@ const doubleCheck = unsafeRows
   })
   .filter((x) => x === true);
 console.log(safeRows.length + doubleCheck.length);
+
+const endTime = performance.now();
+console.log(
+  `Execution time of ${process.argv[1].substring(
+    process.argv[1].indexOf("aoc")
+  )} took ${endTime - startTime} milliseconds`
+);

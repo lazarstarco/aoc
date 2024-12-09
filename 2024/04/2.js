@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
 
+const startTime = performance.now();
 const input = readFileSync("input.txt", "utf8");
 
 const toMap = (input) => {
@@ -37,4 +38,11 @@ for (let i = 1; i < map.length - 1; i++) {
 
 console.log(
   lettersA.reduce((acc, val) => acc + checkForMAS(map, val[0], val[1]), 0)
+);
+
+const endTime = performance.now();
+console.log(
+  `Execution time of ${process.argv[1].substring(
+    process.argv[1].indexOf("aoc")
+  )} took ${endTime - startTime} milliseconds`
 );

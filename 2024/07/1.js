@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
 
+const startTime = performance.now();
 const input = readFileSync("input.txt", "utf8");
 
 const formatFunction = (arr, signs) => {
@@ -16,9 +17,7 @@ const equations = input
   .map((x) => {
     return {
       result: +x[0],
-      numbers: x[1]
-        .split(" ")
-        .map((y) => +y),
+      numbers: x[1].split(" ").map((y) => +y),
     };
   });
 
@@ -39,3 +38,10 @@ equations.forEach((equation) => {
   }
 });
 console.log(result);
+
+const endTime = performance.now();
+console.log(
+  `Execution time of ${process.argv[1].substring(
+    process.argv[1].indexOf("aoc")
+  )} took ${endTime - startTime} milliseconds`
+);

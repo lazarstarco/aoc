@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
 
+const startTime = performance.now();
 const input = readFileSync("input.txt", "utf8");
 
 const directions = {
@@ -69,4 +70,11 @@ const listX = findX(toMap(input));
 
 console.log(
   listX.reduce((acc, val) => acc + analyzeX(toMap(input), val[0], val[1]), 0)
+);
+
+const endTime = performance.now();
+console.log(
+  `Execution time of ${process.argv[1].substring(
+    process.argv[1].indexOf("aoc")
+  )} took ${endTime - startTime} milliseconds`
 );

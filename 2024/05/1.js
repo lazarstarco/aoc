@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
 
+const startTime = performance.now();
 const input = readFileSync("input.txt", "utf8");
 
 const pages = [];
@@ -57,4 +58,11 @@ console.log(
     .filter((page) => !page.map((p) => checkRules(page, p)).includes(false))
     .map((x) => +x.slice(x.length / 2, x.length / 2 + 1))
     .reduce((agg, curr) => (agg += curr))
+);
+
+const endTime = performance.now();
+console.log(
+  `Execution time of ${process.argv[1].substring(
+    process.argv[1].indexOf("aoc")
+  )} took ${endTime - startTime} milliseconds`
 );

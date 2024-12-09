@@ -9,7 +9,17 @@ mkdirSync(today);
 const files = ["1.js", "2.js", "input.txt"];
 const fileContent = `import { readFileSync } from "fs";
 
-const input = readFileSync("input.txt", "utf8");`;
+const startTime = performance.now();
+const input = readFileSync("input.txt", "utf8");
+
+// code
+
+const endTime = performance.now();
+console.log(
+  \`Execution time of \${process.argv[1].substring(
+    process.argv[1].indexOf("aoc")
+  )} took \${endTime - startTime} milliseconds\`
+);`;
 
 files.forEach((file) => {
   writeFileSync(`${today}/${file}`, file === "input.txt" ? "" : fileContent);
